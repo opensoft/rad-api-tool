@@ -1,0 +1,24 @@
+{
+    "name": "opensoft/rad-api-tool",
+    "description": "Tool aimed to aid in rapid api development",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anton Volkov",
+            "email": "anton.volkov@opensoftdev.ru"
+        },
+        {
+            "name": "Eduard Sukharev",
+            "email": "eduard.sukharev@opensoftdev.ru"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/console": "2.3.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Opensoft\\RadApiTool": "src/"
+        }
+    }
+}
