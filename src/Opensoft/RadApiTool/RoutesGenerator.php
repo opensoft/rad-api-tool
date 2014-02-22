@@ -78,4 +78,25 @@ class RoutesGenerator
         $entityForFileName = Utils::toUnderscore($entityName);
         file_put_contents("routing_for_$entityForFileName.yml", $result);
     }
+
+    /**
+     * @param $className
+     * @param $properties
+     * @return string
+     */
+    public function dtoGenerator($className, $properties)
+    {
+        $result = $className . ":\n\tproperties:\n";
+        foreach ($properties as $property => $type) {
+            $result .= "\t\t$property:\n";
+            $result .= "\t\t\ttype: $type\n";
+            $result .= "\t\t\texpose: true\n";
+            $result .= sprintf(
+                "\t\t\tserialized_name: %s\n",
+                Utils::toUnderscore($property)
+            );
+        }
+
+        return $result;
+    }
 }
