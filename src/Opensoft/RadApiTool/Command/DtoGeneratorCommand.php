@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Opensoft\RadApiTool\RoutesGenerator;
+use Opensoft\RadApiTool\Generator;
 
 /**
  * Class RoutesGeneratorCommand
@@ -45,11 +45,12 @@ class DtoGeneratorCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $outputFilename = $input->getArgument('output_filename');
-        $generator = new RoutesGenerator();
+        $generator = new Generator();
         /** @var DialogHelper $helper */
         $helper = $this->getHelperSet()->get('dialog');
         $className = $helper->ask(
@@ -80,7 +81,9 @@ class DtoGeneratorCommand extends Command
         if ($input->getOption('dry-run')) {
             $output->writeln($result);
         } else {
-            file_put_contents($outputFilename, print_r($result, true));
+            file_put_contents($outputFilename, $result);
         }
+
+        return 0;
     }
 }

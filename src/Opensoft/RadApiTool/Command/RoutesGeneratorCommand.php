@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Opensoft\RadApiTool\RoutesGenerator;
+use Opensoft\RadApiTool\Generator;
 
 /**
  * @author Anton Volkov <anton.volkov@opensoftdev.ru>
@@ -62,7 +62,7 @@ class RoutesGeneratorCommand extends Command
         }
         $entityName = $input->getArgument('entity_name');
         $baseUrl = $input->getArgument('base_url');
-        $generator = new RoutesGenerator();
+        $generator = new Generator();
         $generator->generator($vendorName, $bundleName, $entityName, $baseUrl);
         $output->writeln('vendor_name: ' . $input->getArgument('vendor_name'));
         $output->writeln('bundle_name: ' . $input->getArgument('bundle_name'));
