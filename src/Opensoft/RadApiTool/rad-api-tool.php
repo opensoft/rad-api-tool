@@ -9,8 +9,10 @@ set_time_limit(0);
 
 use Symfony\Component\Console\Application;
 use Opensoft\RadApiTool\Command\RoutesGeneratorCommand;
-use Opensoft\RadApiTool\RoutesGenerator;
+use Opensoft\RadApiTool\Command\DtoGeneratorCommand;
+use Opensoft\RadApiTool\Generator;
 
 $application = new Application();
 $application->add(new RoutesGeneratorCommand);
+$application->add(new DtoGeneratorCommand);
 $application->run();

@@ -10,14 +10,12 @@
  */
 
 namespace Opensoft\RadApiTool;
-
-use Opensoft\RadApiTool\Utils;
-use Opensoft\RadApiTool\Command\RoutesGeneratorCommand;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @author Anton Volkov <anton.volkov@opensoftdev.ru>
  */
-class RoutesGenerator
+class Generator
 {
     /**
      * @param $vendorName
@@ -77,5 +75,27 @@ class RoutesGenerator
         ;
         $entityForFileName = Utils::toUnderscore($entityName);
         file_put_contents("routing_for_$entityForFileName.yml", $result);
+    }
+
+    /**
+     * @param string $className
+     * @param array $properties
+     * @return array
+     */
+    public function dtoGenerator($className, array $properties)
+    {
+        $resultData = array();
+        $propertiesData = array("properties" => array());
+        foreach ($properties as $property => $type) {
+            $propertiesData['properties'][$property] = array(
+                'type' => $type,
+                'expose' => true,
+                'serialized_name' => Utils::toUnderscore($property),
+            );
+        }
+        $resultData[$className] = $propertiesData;
+        $result = Yaml::dump($resultData, 99);
+
+        return $result;
     }
 }
