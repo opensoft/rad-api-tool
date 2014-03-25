@@ -17,6 +17,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Opensoft\RadApiTool\ConsoleDump;
+use Opensoft\RadApiTool\DumpInterface;
+use Opensoft\RadApiTool\FileDump;
 use Opensoft\RadApiTool\Generator;
 
 /**
@@ -49,6 +52,11 @@ class DtoGeneratorCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if ($input->getOption('dry-run')) {
+            $resultOutput = new ConsoleDump($output);
+        } else {
+            $resultOutput = new FileDump();
+        }
         $outputFilename = $input->getArgument('output_filename');
         $generator = new Generator();
         /** @var DialogHelper $helper */
@@ -78,11 +86,7 @@ class DtoGeneratorCommand extends Command
             $property = '';
         }
         $result = $generator->dtoGenerator($className, $properties);
-        if ($input->getOption('dry-run')) {
-            $output->writeln($result);
-        } else {
-            file_put_contents($outputFilename, $result);
-        }
+        $resultOutput->dump($outputFilename, $result);
 
         return 0;
     }
